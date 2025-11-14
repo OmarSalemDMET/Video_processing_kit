@@ -1,0 +1,67 @@
+# --- Compiled object files ---
+*.o
+*.obj
+*.lo
+*.slo
+
+# --- Compiled dynamic libraries ---
+*.so
+*.dylib
+*.dll
+
+# --- Compiled static libraries ---
+*.a
+*.lib
+
+# --- Executables ---
+*.exe
+*.out
+*.app
+a.out
+
+# --- CMake build directories ---
+/build/
+/cmake-build*/
+/CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+
+# --- Visual Studio ---
+*.vcxproj*
+*.sln
+*.user
+*.filters
+*.pdb
+*.ipch
+*.aps
+*.db
+*.opendb
+*.cachefile
+*.tlog/
+*.lastbuildstate
+
+# --- CodeBlocks ---
+*.cbp
+*.depend
+*.layout
+
+# --- CLion / JetBrains ---
+.idea/
+*.iml
+
+# --- VSCode ---
+.vscode/
+
+# --- Mac and Linux metadata ---
+.DS_Store
+*.swp
+*.swo
+
+# --- Logs and temporary files ---
+*.log
+*.tmp
+
+# --- Conan / vcpkg ---
+/.conan/
+/vcpkg_installed/
