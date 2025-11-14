@@ -26,9 +26,8 @@ message(STATUS "OpenCV libraries to link: ${OpenCV_LIBS}")
 
 set(PROJECT_SOURCE_FILES
     main.cpp
-    # Add your new source files here, e.g.:
-    # processor.cpp 
-    # utils/image_tools.cpp
+    vid.cpp
+
 )
 
 # --- 2. DEFINE EXECUTABLE TARGET ---
