@@ -1,5 +1,5 @@
-#ifndef VID_H
-#define VID_H
+#ifndef UTILS_H
+#define UTILS_H
 #include <opencv2/core/mat.hpp>
 #include <opencv2/opencv.hpp>
 #include <opencv2/videoio.hpp>
@@ -23,6 +23,5 @@ cv::VideoCapture loadVideo(const std::string& path);
 /// WARNING: this function mutates the original 
 /// Video data 
 std::optional<std::vector<cv::Mat>> videoToGreyScale(cv::VideoCapture * vc);
-std::optional<std::vector<cv::Mat>> getFrameDifferance(std::vector<cv::Mat> * v);
 void writeVideo(std::vector<cv::Mat> * v);
 #endif
