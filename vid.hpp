@@ -23,6 +23,6 @@ cv::VideoCapture loadVideo(const std::string& path);
 /// WARNING: this function mutates the original 
 /// Video data 
 std::optional<std::vector<cv::Mat>> videoToGreyScale(cv::VideoCapture * vc);
-std::vector<cv::Mat> getFrameDifferance(cv::VideoCapture &cv);
-void writeVideo(std::vector<cv::Mat> &v);
+std::optional<std::vector<cv::Mat>> getFrameDifferance(std::vector<cv::Mat> * v);
+void writeVideo(std::vector<cv::Mat> * v);
 #endif
