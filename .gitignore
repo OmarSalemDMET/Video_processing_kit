@@ -65,3 +65,4 @@ Makefile
 # --- Conan / vcpkg ---
 /.conan/
 /vcpkg_installed/
+.cache

@@ -71,3 +71,8 @@ void writeVideo(std::vector<cv::Mat> *v) {
   out.release();
   std::cout << "Video successfully written to output.mp4\n";
 }
+
+inline cv::Mat getWeightedAverage(const double beta, const cv::Mat &bg, const cv::Mat &cf){
+    return (beta * cf) + ((1 - beta) * bg);
+}
+

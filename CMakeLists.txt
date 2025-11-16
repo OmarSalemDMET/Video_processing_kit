@@ -27,6 +27,7 @@ message(STATUS "OpenCV libraries to link: ${OpenCV_LIBS}")
 set(PROJECT_SOURCE_FILES
     main.cpp
     utils.cpp
+    processingTechniques.cpp
 
 )
 
