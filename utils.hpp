@@ -26,10 +26,7 @@ void writeVideo(std::vector<cv::Mat> * v, const std::string& path);
 /// get weighted average
 /// bg : Background 
 /// cf : Current frame
-inline cv::Mat getWeightedAverage(const double beta, const cv::Mat &bg, const cv::Mat &cf){
-    return (beta * cf) + ((1 - beta) * bg);
-}
-
+cv::Mat getWeightedAverage(double beta, const cv::Mat& bg, const cv::Mat& cf);
 
 
 

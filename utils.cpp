@@ -78,4 +78,9 @@ void writeVideo(std::vector<cv::Mat> *v, const std::string& path) {
   std::cout << "Video successfully written to output.mp4\n";
 }
 
+cv::Mat getWeightedAverage(double beta, const cv::Mat& bg, const cv::Mat& cf) {
+    cv::Mat result;
+    result = beta * cf + (1.0 - beta) * bg;  // OpenCV handles weighted add
+    return result;
+}
 

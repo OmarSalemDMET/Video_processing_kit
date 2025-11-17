@@ -3,5 +3,5 @@
 #include <string>
 
 void testFrameDifference(const std::string& path);
-
+void testBackgroundModelling(const std::string &videoPath);
 #endif
