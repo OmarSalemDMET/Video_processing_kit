@@ -20,22 +20,28 @@ cv::VideoCapture loadVideo(const std::string &path) {
 
 std::optional<std::vector<cv::Mat>> videoToGreyScale(cv::VideoCapture *vc) {
   std::vector<cv::Mat> result;
-  while (vc->isOpened()) {
+  if (!vc->isOpened()) {
+    std::cerr << "Error: videoToGreyScale was given an unopened VideoCapture.\n";
+    return std::nullopt;
+  }
+  while (true) {
     cv::Mat frame;
     bool ret = vc->read(frame);
-    if (!ret)
-      return std::nullopt;
+    if (!ret) break;
+    if (frame.empty()) {
+        std::cerr << "Warning: Read an empty frame, stopping.\n";
+        break;
+    }
     cv::Mat greyFrame;
     cv::cvtColor(frame, greyFrame, cv::COLOR_BGR2GRAY);
     result.push_back(greyFrame);
   }
 
-  printVector(result);
   return result;
 }
 
 
-void writeVideo(std::vector<cv::Mat> *v) {
+void writeVideo(std::vector<cv::Mat> *v, const std::string& path) {
   if (v->empty()) {
     std::cerr << "Error: Cannot write empty video.\n";
     return;
@@ -45,7 +51,7 @@ void writeVideo(std::vector<cv::Mat> *v) {
   int f_height = v->at(0).rows;
 
   // VideoWriter: MP4 container with MP4V codec
-  cv::VideoWriter out("output.mp4", cv::VideoWriter::fourcc('m', 'p', '4', 'v'),
+  cv::VideoWriter out(path, cv::VideoWriter::fourcc('m', 'p', '4', 'v'),
                       24.0, cv::Size(f_width, f_height),
                       true // expects 3-channel BGR frames
   );
@@ -72,7 +78,4 @@ void writeVideo(std::vector<cv::Mat> *v) {
   std::cout << "Video successfully written to output.mp4\n";
 }
 
-inline cv::Mat getWeightedAverage(const double beta, const cv::Mat &bg, const cv::Mat &cf){
-    return (beta * cf) + ((1 - beta) * bg);
-}
 

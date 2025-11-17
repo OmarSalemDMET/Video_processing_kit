@@ -1,5 +1,5 @@
-#ifndef PROCESSINGTECHNIQUES_H
-#define PROCESSINGTECHNIQUES_H
+#ifndef PROCESSINGTECHNIQUES_HPP
+#define PROCESSINGTECHNIQUES_HPP
 #include <vector>
 #include <opencv2/opencv.hpp>
 #include <optional>

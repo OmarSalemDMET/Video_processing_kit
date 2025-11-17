@@ -41,28 +41,21 @@ Makefile
 *.tlog/
 *.lastbuildstate
 
-# --- CodeBlocks ---
-*.cbp
-*.depend
-*.layout
 
-# --- CLion / JetBrains ---
-.idea/
-*.iml
 
-# --- VSCode ---
+
 .vscode/
 
-# --- Mac and Linux metadata ---
 .DS_Store
 *.swp
 *.swo
 
-# --- Logs and temporary files ---
 *.log
 *.tmp
 
-# --- Conan / vcpkg ---
 /.conan/
 /vcpkg_installed/
 .cache
+assets
+app
+output.mp4

@@ -1,6 +1,7 @@
 #include "processingTechniques.hpp"
+#include <cassert>
 #include <opencv2/core/mat.hpp>
-#include "utils.cpp"
+#include "utils.hpp"
 #include <vector>
 
 

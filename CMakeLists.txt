@@ -28,6 +28,7 @@ set(PROJECT_SOURCE_FILES
     main.cpp
     utils.cpp
     processingTechniques.cpp
+    test_func.cpp
 
 )
 

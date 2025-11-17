@@ -1,12 +1,10 @@
-#include <opencv2/core/mat.hpp>
-#include <opencv2/opencv.hpp>
+#include "test_func.hpp"
 
 
-
-using namespace cv;
  
 int main()
 {
+    testFrameDifference("./assets/Task 1.mp4");
     return 0;
 }
 
