@@ -6,6 +6,7 @@
 #include <opencv2/videoio.hpp>
 #include <optional>
 #include <stdexcept>
+#include <tuple>
 #include <vector>
 
 cv::VideoCapture loadVideo(const std::string &path) {
@@ -84,3 +85,6 @@ cv::Mat getWeightedAverage(double beta, const cv::Mat& bg, const cv::Mat& cf) {
     return result;
 }
 
+std::tuple<std::vector<std::vector<cv::Point2f>>, std::vector<cv::Rect>> centroidTracker(const cv::Mat &frame) {
+
+}

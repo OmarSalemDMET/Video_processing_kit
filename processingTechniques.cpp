@@ -3,7 +3,9 @@
 #include <opencv2/core.hpp>
 #include <opencv2/core/mat.hpp>
 #include "utils.hpp"
+#include <opencv2/core/types.hpp>
 #include <opencv2/opencv.hpp>
+#include <optional>
 #include <vector>
 
 
@@ -63,4 +65,26 @@ std::optional<std::vector<cv::Mat>> backgroundModelling(
     }
 
     return t_fg;
+}
+
+std::optional<cv::Mat> applyErrosion(const cv::Mat &frame, int kernalSize){
+  cv::Mat result;
+  cv::Mat kernel = cv::getStructuringElement(cv::MORPH_RECT, cv::Size(kernalSize, kernalSize));
+  cv::erode(frame, result, kernel);
+  if (result.empty()){
+    return std::nullopt;
+  }
+  return result;
+}
+
+std::optional<cv::Mat> applyDialation(const cv::Mat &frame, int kernalSize){
+  cv::Mat result; 
+  cv::Mat kernal = cv::getStructuringElement(cv::MORPH_RECT, cv::Size(kernalSize, kernalSize));
+  cv::dilate(frame, result, kernal);
+  if (result.empty()){
+    return std::nullopt;
+  }
+
+  return result; 
+
 }
