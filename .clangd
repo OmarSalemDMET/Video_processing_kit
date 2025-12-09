@@ -1,0 +1,48 @@
+# .clangd for a C++20 project with Boost and OpenMP
+
+CompileFlags:
+  Add:
+    - -std=c++20
+    - -fopenmp
+    - -march=native
+    - -O2
+    - -I${workspaceFolder}/third_party/boost
+    - -I${workspaceFolder}/include
+    - -I/opt/homebrew/include  # macOS Homebrew
+    - -I/usr/local/cuda/include  # CUDA if needed
+  Remove:
+    - -W*  # Remove all warning flags, we'll add our own
+    - -m*  # Remove machine-specific flags
+
+ClangTidy:
+  Checks: >
+    *,
+    -altera-*,
+    -fuchsia-*,
+    -android-*,
+    -cppcoreguidelines-avoid-magic-numbers,
+    -readability-magic-numbers,
+    -modernize-use-trailing-return-type
+  CheckHeaders: true
+  WarningsAsErrors: [bugprone-*, clang-analyzer-*]
+
+Diagnostics:
+  Suppress:
+    # Suppress specific warnings you don't care about
+    - "modernize-use-nodiscard"
+    - "readability-identifier-length"
+
+Index:
+  Background: Build
+  TrackDependencies: true
+  Exclude:
+    - "**/.git/**"
+    - "**/build/**"
+    - "**/test/**"  # Exclude test files from index if needed
+
+InlayHints:
+  Enabled: yes
+  ParameterNames: yes
+  DeducedTypes: yes
+  Designators: yes
+  ShowTypeHints: yes

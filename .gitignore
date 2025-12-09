@@ -60,3 +60,7 @@ assets
 app
 output.mp4
 output
+
+.clj_kondo
+.lsp
+compile_commands.json

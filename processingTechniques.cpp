@@ -84,7 +84,5 @@ std::optional<cv::Mat> applyDialation(const cv::Mat &frame, int kernalSize){
   if (result.empty()){
     return std::nullopt;
   }
-
   return result; 
-
 }

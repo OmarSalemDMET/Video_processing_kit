@@ -29,6 +29,6 @@ void writeVideo(std::vector<cv::Mat> * v, const std::string& path);
 cv::Mat getWeightedAverage(double beta, const cv::Mat& bg, const cv::Mat& cf);
 
 
-std::tuple<std::vector<std::vector<cv::Point2f>>, std::vector<cv::Rect>> centroidTracker(const cv::Mat &frame);
+std::tuple<std::vector<std::vector<cv::Point>>, std::vector<cv::Rect>> centroidTracker(const cv::Mat& frame);
 
 #endif
