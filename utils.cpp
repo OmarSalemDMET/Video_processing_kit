@@ -1,4 +1,5 @@
 #include "utils.hpp"
+#include <cstdlib>
 #include <opencv2/calib3d.hpp>
 #include <opencv2/core/mat.hpp>
 #include <opencv2/core/operations.hpp>
@@ -87,8 +88,8 @@ cv::Mat getWeightedAverage(double beta, const cv::Mat &bg, const cv::Mat &cf) {
   return result;
 }
 
-std::tuple<std::vector<std::vector<cv::Point>>, std::vector<cv::Rect>>
-centroidTracker(const cv::Mat &frame) {
+std::tuple<std::vector<std::vector<cv::Point>>, std::vector<cv::Rect>, double>
+centroidTracker(const cv::Mat &frame, double timestamp) {
   std::vector<std::vector<cv::Point>> contours;
   // since the frames comes in black and white already find contours directly
   cv::findContours(frame, contours, cv::RETR_EXTERNAL, cv::CHAIN_APPROX_SIMPLE);
@@ -101,5 +102,33 @@ centroidTracker(const cv::Mat &frame) {
                                  blobs[i].y + blobs[i].height / 2));
     centroids.push_back(centroid);
   }
-  return std::make_tuple(centroids, blobs);
+  return std::make_tuple(centroids, blobs, timestamp);
+}
+
+
+void addBlobsToFrame(cv::Mat &frame, const std::vector<cv::Rect> &blobs, const std::vector<double> &timestamps) {
+  for (size_t i = 0; i < blobs.size(); i++) {
+    const auto &blob = blobs[i];
+    // Draw green rectangle around the blob
+    cv::rectangle(frame, blob, cv::Scalar(0, 255, 0), 2);
+    
+    // Format timestamp (convert seconds to MM:SS format)
+    double timestamp = timestamps[i];
+    int minutes = static_cast<int>(timestamp) / 60;
+    int seconds = static_cast<int>(timestamp) % 60;
+    int milliseconds = static_cast<int>((timestamp - static_cast<int>(timestamp)) * 1000);
+    
+    char timeStr[16];
+    snprintf(timeStr, sizeof(timeStr), "%02d:%02d.%03d", minutes, seconds, milliseconds);
+    
+    // Place text above the bounding box with white text
+    int textX = blob.x;
+    int textY = blob.y - 10;
+    int fontFace = cv::FONT_HERSHEY_SIMPLEX;
+    double fontScale = 0.5;
+    int thickness = 1;
+    cv::Scalar textColor(255, 255, 255); // white text
+    
+    cv::putText(frame, timeStr, cv::Point(textX, textY), fontFace, fontScale, textColor, thickness);
+  }
 }

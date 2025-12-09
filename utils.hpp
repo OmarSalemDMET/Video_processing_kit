@@ -28,7 +28,9 @@ void writeVideo(std::vector<cv::Mat> * v, const std::string& path);
 /// cf : Current frame
 cv::Mat getWeightedAverage(double beta, const cv::Mat& bg, const cv::Mat& cf);
 
-
-std::tuple<std::vector<std::vector<cv::Point>>, std::vector<cv::Rect>> centroidTracker(const cv::Mat& frame);
-
+/// returns centroids, bounding boxes, and timestamp for a single frame
+std::tuple<std::vector<std::vector<cv::Point>>, std::vector<cv::Rect>, double> centroidTracker(const cv::Mat& frame);
+/// add extracted blobs/'tracked obkject' to a reference frame with timestamps
+/// this function leaves a side effect on the input frame
+void addBlobsToFrame(cv::Mat &frame, const std::vector<cv::Rect> &blobs, const std::vector<double> &timestamps);
 #endif
