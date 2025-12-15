@@ -105,22 +105,24 @@ centroidTracker(const cv::Mat &frame, double timestamp) {
   return std::make_tuple(centroids, blobs, timestamp);
 }
 
-
-void addBlobsToFrame(cv::Mat &frame, const std::vector<cv::Rect> &blobs, const std::vector<double> &timestamps) {
+void addBlobsToFrame(cv::Mat &frame, const std::vector<cv::Rect> &blobs,
+                     const std::vector<double> &timestamps) {
   for (size_t i = 0; i < blobs.size(); i++) {
     const auto &blob = blobs[i];
     // Draw green rectangle around the blob
     cv::rectangle(frame, blob, cv::Scalar(0, 255, 0), 2);
-    
+
     // Format timestamp (convert seconds to MM:SS format)
     double timestamp = timestamps[i];
     int minutes = static_cast<int>(timestamp) / 60;
     int seconds = static_cast<int>(timestamp) % 60;
-    int milliseconds = static_cast<int>((timestamp - static_cast<int>(timestamp)) * 1000);
-    
+    int milliseconds =
+        static_cast<int>((timestamp - static_cast<int>(timestamp)) * 1000);
+
     char timeStr[16];
-    snprintf(timeStr, sizeof(timeStr), "%02d:%02d.%03d", minutes, seconds, milliseconds);
-    
+    snprintf(timeStr, sizeof(timeStr), "%02d:%02d.%03d", minutes, seconds,
+             milliseconds);
+
     // Place text above the bounding box with white text
     int textX = blob.x;
     int textY = blob.y - 10;
@@ -128,7 +130,8 @@ void addBlobsToFrame(cv::Mat &frame, const std::vector<cv::Rect> &blobs, const s
     double fontScale = 0.5;
     int thickness = 1;
     cv::Scalar textColor(255, 255, 255); // white text
-    
-    cv::putText(frame, timeStr, cv::Point(textX, textY), fontFace, fontScale, textColor, thickness);
+
+    cv::putText(frame, timeStr, cv::Point(textX, textY), fontFace, fontScale,
+                textColor, thickness);
   }
 }

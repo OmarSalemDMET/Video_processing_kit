@@ -34,35 +34,40 @@ getFrameDifferance(std::vector<cv::Mat> *v) {
 //   threshhold step thresholded_fg.append(thresh)
 
 // The full implementation
-std::optional<std::vector<cv::Mat>> backgroundModelling(const std::vector<cv::Mat>& v, double beta) {
-    if (v.size() < 2) {
-        return std::nullopt;
-    }
+std::optional<std::vector<cv::Mat>>
+backgroundModelling(const std::vector<cv::Mat> &v, double beta) {
+  if (v.size() < 2) {
+    return std::nullopt;
+  }
 
-    std::vector<cv::Mat> foregroundMasks;
-    foregroundMasks.reserve(v.size());
+  std::vector<cv::Mat> foregroundMasks;
+  foregroundMasks.reserve(v.size());
 
-    cv::Mat accumulator;
-    v[0].convertTo(accumulator, CV_32F);
+  cv::Mat accumulator;
+  v[0].convertTo(accumulator, CV_32F);
 
-    for (size_t i = 0; i < v.size(); ++i) {
-        cv::Mat currentFrameFloat;
-        v[i].convertTo(currentFrameFloat, CV_32F);
+  for (size_t i = 0; i < v.size(); ++i) {
+    cv::Mat currentFrameFloat;
+    v[i].convertTo(currentFrameFloat, CV_32F);
 
-        cv::accumulateWeighted(currentFrameFloat, accumulator, beta);
+    // Only update background where there's NO foreground motion
 
-        cv::Mat diffFloat, diff8bit;
-        cv::absdiff(currentFrameFloat, accumulator, diffFloat);
+    cv::Mat diffFloat, diff8bit;
+    cv::absdiff(currentFrameFloat, accumulator, diffFloat);
 
-        diffFloat.convertTo(diff8bit, CV_8U);
+    diffFloat.convertTo(diff8bit, CV_8U);
 
-        cv::Mat threshold_frame;
-        cv::threshold(diff8bit, threshold_frame, 25, 255, cv::THRESH_BINARY);
+    cv::Mat threshold_frame;
+    cv::threshold(diff8bit, threshold_frame, 0, 255,
+                  cv::THRESH_BINARY | cv::THRESH_OTSU);
 
-        foregroundMasks.push_back(threshold_frame);
-    }
+    cv::Mat bgMask;
+    cv::bitwise_not(threshold_frame, bgMask); // Invert: white = background
+    cv::accumulateWeighted(currentFrameFloat, accumulator, beta, bgMask);
+    foregroundMasks.push_back(threshold_frame);
+  }
 
-    return foregroundMasks;
+  return foregroundMasks;
 }
 std::optional<cv::Mat> applyErrosion(const cv::Mat &frame, int kernalSize) {
   cv::Mat result;

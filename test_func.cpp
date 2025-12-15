@@ -53,9 +53,8 @@ void testCentroidTracker(const std::string &videoPath) {
   }
 
   // 3. Background Modelling (Returns Binary Masks now)
-  // Beta 0.01 is slow enough to keep the bus visible while it moves slowly
   std::vector<cv::Mat> fgMasks;
-  if (auto result = backgroundModelling(greyFrames, 0.01)) {
+  if (auto result = backgroundModelling(greyFrames, 1)) {
     fgMasks = *result;
   } else {
     std::cerr << "Background modelling failed\n";
@@ -65,12 +64,11 @@ void testCentroidTracker(const std::string &videoPath) {
   std::vector<cv::Mat> processedFrames;
 
   // 4 & 5. Noise Reduction (Erosion) + Connecting Blobs (Dilation)
-  // Task 2.mp4 specific:
-  // - Erosion (3x3) removes the flickering tree leaves in top left
-  // - Dilation (15x15) merges cut-up car parts back into solid rectangles
+  // - Erosion (3x3) 
+  // - Dilation (15x15)
   for (const auto &frame : fgMasks) {
     // Apply Erosion
-    auto erodedOpt = applyErrosion(frame, 3);
+    auto erodedOpt = applyErrosion(frame, 6);
     if (!erodedOpt)
       continue;
 
