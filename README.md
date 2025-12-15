@@ -1,4 +1,4 @@
-# Video Processing Kit (Moving Background Filter)
+# Video Processing Kit (Moving Body tracker)
 
 A C++ video processing toolkit designed to detect and track moving bodies within a video stream. This project utilizes OpenCV to implement background subtraction, morphological operations, and centroid tracking.
 
