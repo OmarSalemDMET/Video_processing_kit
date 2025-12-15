@@ -28,7 +28,7 @@ cv::Mat getWeightedAverage(double beta, const cv::Mat &bg, const cv::Mat &cf);
 /// returns centroids, bounding boxes, and timestamp for a single frame
 std::tuple<std::vector<std::vector<cv::Point>>, std::vector<cv::Rect>, double>
 centroidTracker(const cv::Mat &frame, double timestamp);
-/// add extracted blobs/'tracked obkject' to a reference frame with timestamps
+/// add extracted blobs/'tracked object' to a reference frame with timestamps
 /// this function leaves a side effect on the input frame
 void addBlobsToFrame(cv::Mat &frame, const std::vector<cv::Rect> &blobs,
                      const std::vector<double> &timestamps);
